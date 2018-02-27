@@ -1,0 +1,59 @@
+Go through the code once over, and clean up comments among others.
+
+Also double check instructions implemented and not.
+
+And no privilege checks as of yet.
+
+Thread shutting down seems to sometimes cause segfault when sending a kill signal.
+Probably doing thread shutting down to quickly or need to wait on a thread I dont do now.
+
+fix mopc command parsing
+
+fix mon call in/out since we use a totally different in/out code now.
+
+fix mopc out to check so we dont do a buffer overrun
+
+-----------
+
+Insctructions:
+
+IMPLEMENTED:
+STZ, STA ,STT ,STX ,STD ,LDD ,STF ,LDF ,MIN ,LDA ,LDT ,LDX ,ADD ,SUB
+AND, ORA, JMP ,JAP, JAN, JAZ, JAF, JPC, JNC, JXZ, JXN, JPL
+SAB, SAA, SAT, SAX, AAB, AAA, AAT, AAX, BSET, BSKP, ,BSTC ,BSTA ,BLDC
+BLDA ,BANC ,BAND ,BORC ,BORA, LBYT, SBYT, MON, SKP, FAD, FMU, FDV, SRB, LRB
+IRW, IRR, TRA, TRR, MCL, MST, FSB, MPY, NLZ, DNZ, LDATX, LDXTX, STATX, STZTX
+IOF, ION, POF, PIOF, SEX, REX, PON, PION, EXAM, DEPO, LDDTX, LDBTX, STDTX
+BFILL, EXR, MIX3, RMPY, SWAP, RAND, REXO, RORA, RADD, RCLR, EXIT
+RDCR, RINC, RSUB, SHT, SHD, SHA, SAD, INIT, ENTR, LEAVE, ELEAV
+MOVBF
+
+PARTIALLY IMPLEMENTED:
+MOVB
+
+DOUBLE CHECK:
+WAIT, IOX, IOXT, IDENT, RDIV
+
+NOT IMPLEMENTED:
+OPCOM, LWCS
+
+(INSTRUCTIONS IN CE OPTION:)
+ADDD, SUBD, COMD, PACK, UPACK, SHDE
+(INSTRUCTIONS IN CX OPTION:)
+MOVEW, TSET, RDUS, SETPT, CLEPT, CLNREENT, CHREENTPAGES, CLEPU
+(INSTRUCTIONS IN ND110 Butterfly:)
+RTNSIM
+(INSTRUCTIONS IN ND1 and some later computers)
+IOT
+
+-----------
+
+
+Monitor calls:
+
+
+Implemented. O-2
+
+------------
+
+ND110Butterfly does not do instruction prefetch!

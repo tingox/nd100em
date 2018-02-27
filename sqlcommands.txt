@@ -1,0 +1,28 @@
+#commands to put last pushed data into a new separate runid
+use nd100em;
+select @a:= max(runid)+1 from tracecode;
+update tracecode set runid=@a where runid like 0;
+update traceregs set runid=@a where runid like 0;
+update tracemem set runid=@a where runid like 0;
+update traceother set runid=@a where runid like 0;
+#remove the code load into memory
+delete from tracemem where runid=@a and instrnum=0;
+
+
+# process data into five cols output
+# #of the instruction run, current runlevel, what address (PC), code run, and possibly if EXR - what actual instruction run by it
+use nd100em;
+select tracecode.instrnum as instr,traceregs.val as lvl,tracecode.addr as addr,tracecode.code as code ,ifnull(traceother.data,'') as extra
+from tracecode inner join traceregs on tracecode.instrnum = traceregs.instrnum and tracecode.runid=traceregs.runid and traceregs.register like 'CurrLevel'
+and tracecode.runid=2 left join traceother on tracecode.instrnum = traceother.instrnum and tracecode.runid=traceother.runid and tracecode.runid=2;
+
+# process data into five cols output
+# #of the instruction run, current runlevel, what address (PC), code run, and possibly if EXR - what actual instruction run by it
+# but - skip known subroutines except first instruction in every subroutine
+use nd100em;
+select @a:=3;
+select c.instrnum as instr,r.val as lvl,c.addr as addr,c.code as code ,ifnull(o.data,'') as extra from tracecode c
+inner join traceregs r on c.instrnum = r.instrnum and c.runid=r.runid and r.register like 'CurrLevel' and r.val=0 and c.runid=@a
+left join traceother o on c.instrnum = o.instrnum and c.runid=o.runid and c.runid=@a
+left join traceignore i on c.addr=i.addr where i.xtra is null;
+

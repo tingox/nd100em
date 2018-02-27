@@ -1,0 +1,44 @@
+The binary will run .bp format files, as well as stripped bpun files.
+all configuration of start parameters is done through nd100em.conf file,
+see instructions in the example file for examples of how to use it.
+
+To run a particular program copy it first either to test.bpun or test.bp depending
+on format, and then set the correct start address in config file.
+For example, to run MAC: (start address 173415 octal)
+copy NPL.bp to test.bp, and set config file to bp format, and start addess
+63245.
+
+Then run emulator with ./nd100em.
+
+./nd100em
+Loading...
+
+- MAC -
+
+
+
+----
+We now also have support for simple panel as well as console on sockets.
+Panel connects to port 5000
+Console connects to port 5001
+
+----
+Panel communication format:
+Say we want to depress the OPCOM button.
+then we send cleartext:
+OPCOM_PRESSED<lf>
+
+Current commands:
+OPCOM_PRESSED
+MCL_PRESSED
+LOAD_PRESSED
+STOP_PRESSED
+
+
+
+//TO BE EXPANDED!!!
+
+----
+Console communication format:
+Console communicates as a standard telnet connection...
+
